@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>留言</title>
+</head>
+
+<body>
+    新增留言<br>
+    留言者:<input type="text" name="author" id="author" value="John"><br>
+    內容:<input type="text" name="title" id="title" value="AAA"><br>
+    <button id="send">
+        送出
+    </button>
+
+    <script>
+        document.getElementById('send')
+            .addEventListener('click', event => {
+                const author = document.getElementById('author').value
+                const title = document.getElementById('title').value
+                console.log(author, title)
+
+                fetch('http://localhost:3000/posts', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        title: title,
+                        author: author
+                    }),
+                    headers: {
+                        'Content-type': 'application/json; charset=UTF-8',
+                    },
+                })
+                    .then((response) => response.json())
+                    .then((json) => {
+                        console.log(json)
+                        window.location.href = "/posts.html"
+                    });
+            })
+
+    </script>
+</body>
+
+</html>

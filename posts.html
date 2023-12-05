@@ -46,16 +46,14 @@
     </table>
 
 
-
-    <a href="index.html">
-        首頁
-    </a>
+    <a href="post.html"> 新增留言 </a><br>
+    <a href="index.html"> 首頁 </a>
 
     <script>
 
         // 讀出所有的post
         fetch('http://localhost:3000/posts')
-        // fetch('https://salt-internal-process.glitch.me/posts')
+            // fetch('https://salt-internal-process.glitch.me/posts')
             .then(response => response.json())
             // .then(json => console.log(json))
             .then(
