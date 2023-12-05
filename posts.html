@@ -7,11 +7,27 @@
     <title>留言板</title>
 </head>
 
+<style>
+    td {
+        border-collapse: collapse;
+        border-width: 1px;
+        border-color: black;
+        border-style: double;
+    }
+
+    th,
+    td {
+        padding: 9px;
+        text-align: center;
+    }
+</style>
+
 <body>
     所有的留言 <br>
 
 
     <table>
+
         <thead>
             <tr>
                 <th>id</th>
@@ -19,18 +35,14 @@
                 <th>title</th>
             </tr>
         </thead>
-        <tbody>
+
+        <tbody id="posts">
             <tr>
-                <td>1</td>
-                <td>John</td>
-                <td>babababa</td>
+                <td colspan="3">資料讀取中，請稍後...</td>
             </tr>
-            <tr>
-                <td>2</td>
-                <td>Mary</td>
-                <td>babababa</td>
-            </tr>
+
         </tbody>
+
     </table>
 
 
@@ -43,15 +55,24 @@
 
         // 讀出所有的post
         fetch('http://localhost:3000/posts')
-            // fetch('https://salt-internal-process.glitch.me/posts')
+        // fetch('https://salt-internal-process.glitch.me/posts')
             .then(response => response.json())
             // .then(json => console.log(json))
             .then(
                 datas => {
+                    let html = ''
                     datas.forEach(e => {
                         console.log(e.id, e.author, e.title)
+                        html += `
+                        <tr>
+                            <td>${e.id}</td>
+                            <td>${e.author}</td>
+                            <td>${e.title}</td>
+                        </tr>
+                        `
 
                     });
+                    document.getElementById('posts').innerHTML = html
                 }
             )
 
