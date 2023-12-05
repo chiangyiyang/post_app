@@ -22,7 +22,7 @@
                 const title = document.getElementById('title').value
                 console.log(author, title)
 
-                fetch('http://localhost:3000/posts', {
+                fetch('https://salt-internal-process.glitch.me/posts', {
                     method: 'POST',
                     body: JSON.stringify({
                         title: title,

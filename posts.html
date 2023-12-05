@@ -50,9 +50,20 @@
     <a href="index.html"> 首頁 </a>
 
     <script>
+        function deleteById(id) {
+            console.log(id)
+            fetch(`https://salt-internal-process.glitch.me/posts/${id}`, {
+                method: 'DELETE'
+            })
+                .then((response) => response.json())
+                .then((json) => {
+                    console.log(json)
+                    window.location.href = "/posts.html"
+                });
+        }
 
         // 讀出所有的post
-        fetch('http://localhost:3000/posts')
+        fetch('https://salt-internal-process.glitch.me/posts')
             // fetch('https://salt-internal-process.glitch.me/posts')
             .then(response => response.json())
             // .then(json => console.log(json))
@@ -66,6 +77,7 @@
                             <td>${e.id}</td>
                             <td>${e.author}</td>
                             <td>${e.title}</td>
+                            <td><button onclick="deleteById(${e.id})">X</button></td>
                         </tr>
                         `
 
