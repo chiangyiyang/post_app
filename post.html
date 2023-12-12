@@ -9,35 +9,81 @@
 
 <body>
     新增留言<br>
-    留言者:<input type="text" name="author" id="author" value="John"><br>
-    內容:<input type="text" name="title" id="title" value="AAA"><br>
+    留言者:<input type="text" name="author" id="author" value="John Doe"><br>
+    內容:<input type="text" name="title" id="title" value="A Great Story"><br>
     <button id="send">
         送出
     </button>
 
     <script>
-        document.getElementById('send')
-            .addEventListener('click', event => {
-                const author = document.getElementById('author').value
-                const title = document.getElementById('title').value
-                console.log(author, title)
+        function postData(event) {
+            const author = document.getElementById('author').value
+            const title = document.getElementById('title').value
 
-                fetch('https://salt-internal-process.glitch.me/posts', {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        title: title,
-                        author: author
-                    }),
-                    headers: {
-                        'Content-type': 'application/json; charset=UTF-8',
-                    },
-                })
-                    .then((response) => response.json())
-                    .then((json) => {
-                        console.log(json)
-                        window.location.href = "/posts.html"
-                    });
+            fetch('https://salt-internal-process.glitch.me/posts', {
+                method: 'POST',
+                body: JSON.stringify({
+                    title: title,
+                    author: author
+                }),
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                },
             })
+                .then((response) => response.json())
+                .then((json) => {
+                    console.log(json)
+                    window.location.href = "/posts.html"
+                });
+        }
+
+
+        function putData(event) {
+            const author = document.getElementById('author').value
+            const title = document.getElementById('title').value
+            
+            const id = urlParams.get('id')
+            fetch(`https://salt-internal-process.glitch.me/posts/${id}`, {
+                method: 'PUT',
+                body: JSON.stringify({
+                    title: title,
+                    author: author
+                }),
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                },
+            })
+                .then((response) => response.json())
+                .then((json) => {
+                    console.log(json)
+                    window.location.href = "/posts.html"
+                });
+        }
+
+
+
+        let urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('id')) {
+            // 載入資料
+            const id = urlParams.get('id')
+            fetch(`https://salt-internal-process.glitch.me/posts/${id}`)
+                .then(response => response.json())
+                .then(
+                    post => {
+                        let html = ''
+                        console.log(post)
+                        document.getElementById('title').value = post.title
+                        document.getElementById('author').value = post.author
+
+                        document.getElementById('send')
+                            .addEventListener('click', putData)
+                    })
+
+        } else {
+            document.getElementById('send')
+                .addEventListener('click', postData)
+
+        }
 
     </script>
 </body>

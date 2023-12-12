@@ -57,27 +57,31 @@
             })
                 .then((response) => response.json())
                 .then((json) => {
-                    console.log(json)
                     window.location.href = "/posts.html"
                 });
         }
 
+
+        function updateById(id) {
+            window.location.href = `/post.html?id=${id}`
+        }
+
         // 讀出所有的post
         fetch('https://salt-internal-process.glitch.me/posts')
-            // fetch('https://salt-internal-process.glitch.me/posts')
             .then(response => response.json())
-            // .then(json => console.log(json))
             .then(
                 datas => {
                     let html = ''
                     datas.forEach(e => {
-                        console.log(e.id, e.author, e.title)
                         html += `
                         <tr>
                             <td>${e.id}</td>
                             <td>${e.author}</td>
                             <td>${e.title}</td>
-                            <td><button onclick="deleteById(${e.id})">X</button></td>
+                            <td>
+                                <button onclick="updateById(${e.id})">✏️</button>
+                                <button onclick="deleteById(${e.id})">🗑️</button>
+                                </td>
                         </tr>
                         `
 
@@ -85,9 +89,6 @@
                     document.getElementById('posts').innerHTML = html
                 }
             )
-
-
-        // console.log("HI")
 
     </script>
 </body>
